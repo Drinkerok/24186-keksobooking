@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Дмитрий Казанцев](https://up.htmlacademy.ru/javascript/14/user/24186).
-* Наставник: `Неизвестно`.
+* Наставник: `Никого`.
 
 ---
 
