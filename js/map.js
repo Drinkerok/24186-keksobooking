@@ -133,8 +133,6 @@ function createPopup(item) {
     item = usersArr[0];
   }
 
-  console.log(item);
-
   popup = templatePopup.cloneNode(true);
   var offer = item.offer;
   var placeType;
@@ -201,9 +199,9 @@ function setAddressValue(x, y) {
 function getElCenter(el) {
   var elCoords = el.getBoundingClientRect();
   return {
-    'x': +(((elCoords.right - elCoords.left)/2).toFixed(0)),
-    'y': +(((elCoords.bottom - elCoords.top)/2).toFixed(0)),
-  }
+    'x': +(((elCoords.right - elCoords.left) / 2).toFixed(0)),
+    'y': +(((elCoords.bottom - elCoords.top) / 2).toFixed(0)),
+  };
 }
 
 
@@ -215,10 +213,7 @@ var PIN_BOTTOM_DELTA = 16;
 var form = document.querySelector('.ad-form');
 var formAddress = form.querySelector('#address');
 
-var mainPinCenter = getElCenter(mapMainPin)
+var mainPinCenter = getElCenter(mapMainPin);
 setAddressValue(mainPinCenter.x, mainPinCenter.y);
 mapMainPin.addEventListener('mouseup', activatePage);
-
-// map.insertBefore(createPopup(usersArr[0]), mapFilters);
-
 
