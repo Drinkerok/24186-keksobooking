@@ -7,17 +7,6 @@
     return rand;
   };
 
-  var getRandomFeatures = function (arr) {
-    var number = getRandomInteger(1, arr.length);
-    var features = [];
-
-    for (var i = 0; i < number; i++) {
-      features.push(arr[i]);
-    }
-
-    return features;
-  };
-
   var getElCenter = function (el) {
     var elCoords = el.getBoundingClientRect();
 
@@ -30,7 +19,6 @@
 
   window.commonFunctions = {
     getRandomInteger: getRandomInteger,
-    getRandomFeatures: getRandomFeatures,
     getElCenter: getElCenter,
   };
 })();

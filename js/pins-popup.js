@@ -11,6 +11,7 @@
   var popupFeaturesWrapper = popup.querySelector('.popup__features');
   var popupFeatures = popup.querySelectorAll('.popup__feature');
   var buttonClose = popup.querySelector('.popup__close');
+  var photoTemplate = popup.querySelector('.popup__photo');
 
   function clearPopup() {
     popup.querySelector('.popup__title').textContent = '';
@@ -27,9 +28,6 @@
     }
 
     var photosTemplate = popup.querySelector('.popup__photos');
-    var photoTemplate = photosTemplate.querySelector('.popup__photo');
-    photoTemplate.src = '';
-
     photosTemplate.innerHTML = '';
     photosTemplate.appendChild(photoTemplate);
 
@@ -77,7 +75,6 @@
     }
 
     var photosTemplate = popup.querySelector('.popup__photos');
-    var photoTemplate = photosTemplate.querySelector('.popup__photo');
     photosTemplate.removeChild(photoTemplate);
 
     for (i = 0; i < offer.photos.length; i++) {
