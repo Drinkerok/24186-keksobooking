@@ -1216,3 +1216,18 @@ fieldset {
       -ms-transform: translateX(-50%);
           transform: translateX(-50%);
 }
+
+.connection-notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #f00;
+  color: #fff;
+  display: none;
+}
+
+.connection-notification.open {
+  display: block;
+}
