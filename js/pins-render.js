@@ -3,15 +3,10 @@
 (function () {
   var templateAll = document.querySelector('template').content;
   var templatePin = templateAll.querySelector('.map__pin');
-  var pinsRendered = false;
+  var renderedPins = [];
 
 
-  var renderPins = function (elToRender) {
-    if (pinsRendered) {
-      return;
-    }
-
-    pinsRendered = true;
+  function pinsRender(elToRender) {
     var pinFragment = document.createDocumentFragment();
 
     var pinClickListener = function (user) {
@@ -34,12 +29,23 @@
       pinClickListener(user);
 
 
+      renderedPins.push(user.pin);
       pinFragment.appendChild(user.pin);
     }
 
     elToRender.appendChild(pinFragment);
   };
+  function pinsRemove() {
+    renderedPins.forEach(function(pin) {
+      pin.parentNode.removeChild(pin);
+    });
+
+    renderedPins = [];
+  }
 
 
-  window.renderPins = renderPins;
+  window.pinsActions = {
+    render: pinsRender,
+    remove: pinsRemove,
+  };
 })();
