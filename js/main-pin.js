@@ -8,7 +8,6 @@
     x: getComputedStyle(mapMainPin).left,
     y: getComputedStyle(mapMainPin).top,
   };
-  console.log(pinStartCoords);
 
   var PIN_POSITION_LIMIT = {
     'x': {
@@ -79,5 +78,5 @@
 
   window.mainPinActions = {
     resetPosition: setStartPosition,
-  }
+  };
 })();

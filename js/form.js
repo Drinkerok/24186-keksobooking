@@ -5,7 +5,7 @@
   var mapMainPin = map.querySelector('.map__pin--main');
 
   var form = document.querySelector('.ad-form');
-  
+
   var formInputs = form.querySelectorAll('input');
   var formSelects = form.querySelectorAll('select');
   var formButtons = form.querySelectorAll('button');
@@ -51,13 +51,13 @@
       flat: 1000,
       house: 5000,
       palace: 10000,
-    }
+    };
 
     formPrice.placeholder = 'от ' + TypeToPrice[formType.value];
     formPrice.min = TypeToPrice[formType.value];
   }
-  function onTimeChange() {
-    timeSynchronization(this.value);
+  function onTimeChange(val) {
+    timeSynchronization(val);
   }
   function timeSynchronization(val) {
     formTimeIn.value = val;
@@ -120,7 +120,7 @@
     window.pinsActions.remove();
     window.mainPinActions.resetPosition();
     checkRoomCapacity();
-  }
+  };
 
 
   checkRoomCapacity();
@@ -139,8 +139,12 @@
   setPriceFromType();
   formType.addEventListener('change', setPriceFromType);
 
-  formTimeIn.addEventListener('change', onTimeChange);
-  formTimeOut.addEventListener('change', onTimeChange);
+  formTimeIn.addEventListener('change', function () {
+    onTimeChange(formTimeIn.value);
+  });
+  formTimeOut.addEventListener('change', function () {
+    onTimeChange(formTimeOut.value);
+  });
 
   setDisableToFields(true);
   setAddressValue(mapMainPin);
@@ -150,5 +154,5 @@
     activate: activateForm,
     deactivate: deactivateForm,
     setAddress: setAddressValue,
-  }
+  };
 })();

@@ -1,3 +1,5 @@
+'use strict';
+
 var successBlock = document.querySelector('.success');
 
 function successOpen() {
@@ -12,11 +14,11 @@ function successClose() {
 }
 
 function closeByEsc(e) {
-  if (e.keyCode == 27) {
+  if (e.keyCode === 27) {
     successClose();
   }
 }
-function closeByClick(e) {
+function closeByClick() {
   successClose();
 }
 

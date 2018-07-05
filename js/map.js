@@ -12,4 +12,4 @@ function mapDeactivate() {
 window.mapActions = {
   activate: mapActivate,
   deactivate: mapDeactivate
-}
+};

@@ -92,13 +92,23 @@
 
   function openPopup() {
     map.insertBefore(popup, mapFilters);
+    window.addEventListener('keydown', closeByEsc);
   }
   function closePopup() {
     map.removeChild(popup, mapFilters);
+    window.removeEventListener('keydown', closeByEsc);
+  }
+  function closeByEsc(e) {
+    if (e.keyCode === 27) {
+      closePopup();
+    }
   }
 
   buttonClose.addEventListener('click', closePopup);
 
 
-  window.createPopup = createPopup;
+  window.pinPopup = {
+    create: createPopup,
+    close: closePopup,
+  };
 })();
