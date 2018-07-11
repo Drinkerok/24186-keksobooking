@@ -8,9 +8,6 @@
     palace: 10000,
   };
 
-  var map = document.querySelector('.map');
-  var mapMainPin = map.querySelector('.map__pin--main');
-
   var form = document.querySelector('.ad-form');
 
   var formInputs = form.querySelectorAll('input');
@@ -33,8 +30,6 @@
   var formSubmit = form.querySelector('.ad-form__submit');
 
 
-
-
   var popupNotification = document.querySelector('.connection-notification');
 
   var formFieldsValid = {
@@ -46,7 +41,7 @@
       status: false,
       input: formPrice
     }
-  }
+  };
 
   function setDisableToFields(disableState) {
     setDisableToCollection(formInputs, disableState);
@@ -143,7 +138,7 @@
         formFieldsValid[key].input.style = 'border: 2px solid #f00';
       }
     }
-  }
+  };
 
   formTitle.addEventListener('input', function () {
     onFieldInput(formTitle, 'title');
@@ -161,7 +156,7 @@
   });
 
 
-  form.addEventListener('submit', function(e) {
+  form.addEventListener('submit', function (e) {
     onFormSubmit(e);
   });
   form.addEventListener('reset', onFormReset);
@@ -179,9 +174,9 @@
 
   setDisableToFields(true);
 
-  formSubmit.addEventListener('click', function (e) {
+  formSubmit.addEventListener('click', function () {
     isFormValid();
-  })
+  });
 
 
   window.formActions = {

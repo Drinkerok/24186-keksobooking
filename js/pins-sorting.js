@@ -40,22 +40,22 @@
       return (value === 'any' || +value === offer.guests) ? rating['housing-guests'] : 0;
     },
     'set-conditioner': function (value, offer) {
-      return (!value || offer.features.indexOf('conditioner') != -1) ? rating['conditioner'] : 0;
+      return (!value || offer.features.indexOf('conditioner') !== -1) ? rating['conditioner'] : 0;
     },
     'set-dishwasher': function (value, offer) {
-      return (!value || offer.features.indexOf('dishwasher') != -1) ? rating['dishwasher'] : 0;
+      return (!value || offer.features.indexOf('dishwasher') !== -1) ? rating['dishwasher'] : 0;
     },
     'set-elevator': function (value, offer) {
-      return (!value || offer.features.indexOf('elevator') != -1) ? rating['elevator'] : 0;
+      return (!value || offer.features.indexOf('elevator') !== -1) ? rating['elevator'] : 0;
     },
     'set-parking': function (value, offer) {
-      return (!value || offer.features.indexOf('parking') != -1) ? rating['parking'] : 0;
+      return (!value || offer.features.indexOf('parking') !== -1) ? rating['parking'] : 0;
     },
     'set-washer': function (value, offer) {
-      return (!value || offer.features.indexOf('washer') != -1) ? rating['washer'] : 0;
+      return (!value || offer.features.indexOf('washer') !== -1) ? rating['washer'] : 0;
     },
     'set-wifi': function (value, offer) {
-      return (!value || offer.features.indexOf('wifi') != -1) ? rating['wifi'] : 0;
+      return (!value || offer.features.indexOf('wifi') !== -1) ? rating['wifi'] : 0;
     }
   };
 
