@@ -1,6 +1,13 @@
 'use strict';
 
 (function () {
+  var TYPE_TO_PRICE = {
+    bungalo: 0,
+    flat: 1000,
+    house: 5000,
+    palace: 10000,
+  };
+
   var map = document.querySelector('.map');
   var mapMainPin = map.querySelector('.map__pin--main');
 
@@ -12,6 +19,7 @@
 
   var formAddress = form.querySelector('#address');
 
+  var formTitle = form.querySelector('#title');
   var formType = form.querySelector('#type');
   var formPrice = form.querySelector('#price');
 
@@ -22,7 +30,23 @@
   var formCapacity = form.querySelector('#capacity');
   var formCapacityOptions = formCapacity.querySelectorAll('option');
 
+  var formSubmit = form.querySelector('.ad-form__submit');
+
+
+
+
   var popupNotification = document.querySelector('.connection-notification');
+
+  var formFieldsValid = {
+    title: {
+      status: false,
+      input: formTitle
+    },
+    price: {
+      status: false,
+      input: formPrice
+    }
+  }
 
   function setDisableToFields(disableState) {
     setDisableToCollection(formInputs, disableState);
@@ -45,62 +69,53 @@
   }
 
 
-  function setPriceFromType() {
-    var TypeToPrice = {
-      bungalo: 0,
-      flat: 1000,
-      house: 5000,
-      palace: 10000,
-    };
+  function onFieldInput(input, key) {
+    formFieldsValid[key].input.style = '';
+    formFieldsValid[key].status = input.validity.valid;
+  }
 
-    formPrice.placeholder = 'от ' + TypeToPrice[formType.value];
-    formPrice.min = TypeToPrice[formType.value];
+
+  function setPriceFromType() {
+    formPrice.placeholder = 'от ' + TYPE_TO_PRICE[formType.value];
+    formPrice.min = TYPE_TO_PRICE[formType.value];
   }
   function onTimeChange(val) {
-    timeSynchronization(val);
+    synchronizeTime(val);
   }
-  function timeSynchronization(val) {
+  function synchronizeTime(val) {
     formTimeIn.value = val;
     formTimeOut.value = val;
   }
 
 
-  function setAddressValue(pin) {
-    var mainPinCenter = window.commonFunctions.getElCenter(pin);
-    formAddress.value = '' + mainPinCenter.x + ', ' + mainPinCenter.y;
+  function setAddressValue(coords) {
+    formAddress.value = '' + coords.x + ', ' + coords.y;
   }
 
 
   function checkRoomCapacity() {
-    var selectedOption = formCapacity.options[formCapacity.selectedIndex];
-    var capacityDataArr = selectedOption.getAttribute('data-room').split(',');
-
-    if (capacityDataArr.indexOf(formRoom.value) === -1) {
-      formCapacity.setCustomValidity(getRoomValidityString());
-      return;
-    }
-
-    formCapacity.setCustomValidity('');
-  }
-  function getRoomValidityString() {
-    var roomValidityString = 'Допустимые значения: ';
+    var someOptionSelected = false;
 
     for (var i = 0; i < formCapacityOptions.length; i++) {
       var capacityOption = formCapacityOptions[i];
       var optionDataArr = capacityOption.getAttribute('data-room').split(',');
 
-      if (optionDataArr.indexOf(formRoom.value) !== -1) {
-        roomValidityString += capacityOption.innerHTML + ', ';
+      var optionCurrect = !(optionDataArr.indexOf(formRoom.value) === -1);
+
+      capacityOption.disabled = !optionCurrect;
+      if (!optionCurrect) {
+        capacityOption.selected = false;
+      } else if (!someOptionSelected) {
+        someOptionSelected = true;
+        capacityOption.selected = true;
       }
     }
-    roomValidityString = roomValidityString.slice(0, -2);
-
-    return roomValidityString;
   }
 
 
   var onFormSubmit = function (e) {
     e.preventDefault();
+
     window.backend.save(new FormData(form), onSendSuccess, onSendFail);
   };
   var onSendSuccess = function () {
@@ -122,6 +137,20 @@
     checkRoomCapacity();
   };
 
+  var isFormValid = function () {
+    for (var key in formFieldsValid) {
+      if (formFieldsValid[key].status === false) {
+        formFieldsValid[key].input.style = 'border: 2px solid #f00';
+      }
+    }
+  }
+
+  formTitle.addEventListener('input', function () {
+    onFieldInput(formTitle, 'title');
+  });
+  formPrice.addEventListener('input', function () {
+    onFieldInput(formPrice, 'price');
+  });
 
   checkRoomCapacity();
   formRoom.addEventListener('change', function () {
@@ -132,7 +161,9 @@
   });
 
 
-  form.addEventListener('submit', onFormSubmit);
+  form.addEventListener('submit', function(e) {
+    onFormSubmit(e);
+  });
   form.addEventListener('reset', onFormReset);
 
 
@@ -147,7 +178,10 @@
   });
 
   setDisableToFields(true);
-  setAddressValue(mapMainPin);
+
+  formSubmit.addEventListener('click', function (e) {
+    isFormValid();
+  })
 
 
   window.formActions = {

@@ -2,7 +2,7 @@
 
 (function () {
   var getRandomInteger = window.commonFunctions.getRandomInteger;
-  var usersArr = [];
+  var users = [];
 
 
   function createPins(pinsData) {
@@ -10,19 +10,19 @@
       var pinData = pinsData[i];
       var pinOffer = pinData.offer;
 
-      usersArr.push({
+      users.push({
         'author': {
           avatar: pinData.author.avatar || 'img/avatars/user0' + (i + 1) + '.png',
         },
         'offer': {
-          title: pinOffer.title || 'Нет описания',
-          address: pinOffer.address || 'Точного адреса нет',
-          price: pinOffer.price || 'Цена не указана',
-          type: pinOffer.type || 'Не указан тип',
-          rooms: pinOffer.rooms || 'Не указано кол-во комнат',
-          guests: pinOffer.guests || 'Не указано кол-во гостей',
-          checkin: pinOffer.checkin || 'Не указано время заезда',
-          checkout: pinOffer.checkout || 'Не указано время выезда',
+          title: pinOffer.title || '? ',
+          address: pinOffer.address || '? ',
+          price: pinOffer.price || '? ',
+          type: pinOffer.type || '? ',
+          rooms: pinOffer.rooms || '? ',
+          guests: pinOffer.guests || '? ',
+          checkin: pinOffer.checkin || '? ',
+          checkout: pinOffer.checkout || '? ',
           features: pinOffer.features || [],
           description: pinOffer.description || '',
           photos: pinOffer.photos || [],
@@ -39,5 +39,5 @@
   window.backend.load(createPins);
 
 
-  window.usersArr = usersArr;
+  window.usersArr = users;
 })();

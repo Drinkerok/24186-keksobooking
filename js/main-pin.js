@@ -4,21 +4,28 @@
   var map = document.querySelector('.map');
   var mapPins = map.querySelector('.map__pins');
   var mapMainPin = map.querySelector('.map__pin--main');
-  var pinStartCoords = {
-    x: getComputedStyle(mapMainPin).left,
-    y: getComputedStyle(mapMainPin).top,
-  };
 
-  var PIN_POSITION_LIMIT = {
+  var pinPositionLimit = {
     'x': {
       'min': 0,
       'max': parseInt(getComputedStyle(map).width, 10) - parseInt(getComputedStyle(mapMainPin).width, 10),
     },
     'y': {
-      'min': 130 - parseInt(getComputedStyle(mapMainPin).height, 10) / 2,
-      'max': 630 - parseInt(getComputedStyle(mapMainPin).height, 10) / 2,
+      'min': 130,
+      'max': 630,
     }
   };
+
+  var pinWidth = mapMainPin.clientWidth;
+  var pinHeight = mapMainPin.clientHeight;
+  var pinHeightDelta = 22;
+
+  var pinStartCoords = {
+    x: mapMainPin.offsetLeft + pinWidth / 2,
+    y: mapMainPin.offsetTop - pinHeight - pinHeightDelta,
+  };
+
+  window.formActions.setAddress(pinStartCoords);
 
   function setStartPosition() {
     mapMainPin.style.left = pinStartCoords.x;
@@ -34,6 +41,8 @@
       x: e.clientX,
       y: e.clientY,
     };
+    var shiftX;
+    var shiftY;
 
     var onPinMove = function (ev) {
       ev.preventDefault();
@@ -48,25 +57,31 @@
         y: ev.clientY,
       };
 
-      var shiftX = mapMainPin.offsetLeft - delta.x;
-      var shiftY = mapMainPin.offsetTop - delta.y;
+      shiftX = mapMainPin.offsetLeft - delta.x;
+      shiftY = mapMainPin.offsetTop - delta.y;
 
-      shiftX = (shiftX < PIN_POSITION_LIMIT.x.min) ? PIN_POSITION_LIMIT.x.min : shiftX;
-      shiftX = (shiftX > PIN_POSITION_LIMIT.x.max) ? PIN_POSITION_LIMIT.x.max : shiftX;
+      shiftX = (shiftX < pinPositionLimit.x.min) ? pinPositionLimit.x.min : shiftX;
+      shiftX = (shiftX > pinPositionLimit.x.max) ? pinPositionLimit.x.max : shiftX;
 
-      shiftY = (shiftY < PIN_POSITION_LIMIT.y.min) ? PIN_POSITION_LIMIT.y.min : shiftY;
-      shiftY = (shiftY > PIN_POSITION_LIMIT.y.max) ? PIN_POSITION_LIMIT.y.max : shiftY;
+      shiftY = (shiftY < pinPositionLimit.y.min) ? pinPositionLimit.y.min : shiftY;
+      shiftY = (shiftY > pinPositionLimit.y.max) ? pinPositionLimit.y.max : shiftY;
 
       mapMainPin.style.top = shiftY + 'px';
       mapMainPin.style.left = shiftX + 'px';
-      window.formActions.setAddress(mapMainPin);
+      window.formActions.setAddress({
+        x: shiftX,
+        y: shiftY
+      });
     };
     var onPinStop = function (evt) {
       evt.preventDefault();
       document.removeEventListener('mousemove', onPinMove);
       document.removeEventListener('mouseup', onPinStop);
       window.pageActions.activatePage();
-      window.formActions.setAddress(mapMainPin);
+      window.formActions.setAddress({
+        x: shiftX,
+        y: shiftY
+      });
 
       window.pinsActions.render(mapPins);
     };

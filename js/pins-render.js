@@ -14,7 +14,13 @@
 
     var pinClickListener = function (user) {
       user.pin.addEventListener('click', function () {
-        window.pinPopup.create(user);
+        if (user.pin.classList.contains('map__pin--active')) {
+          window.pinPopup.close();
+        } else {
+          window.pinPopup.create(user);
+        }
+
+        user.pin.classList.toggle('map__pin--active');
       });
     };
 

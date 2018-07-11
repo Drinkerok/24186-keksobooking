@@ -10,7 +10,7 @@
   form.style.display = 'none';
 
   form.addEventListener('change', function () {
-    window.pinsSorting(getInformation());
+    window.sortPins(getInformation());
   });
 
   function enableFilters() {
